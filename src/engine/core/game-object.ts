@@ -2,15 +2,21 @@ import { Vector2 } from "./vector2";
 import { IComponent } from "./component";
 import { Collider } from "../colliders/collider";
 import { Body } from "../physics/body";
+import { Renderer } from "../render/renderer";
 
 export class GameObject {
     public position = new Vector2();
     private _collider: Collider;
     private _body: Body;
+    private _renderer: Renderer;
     private components: Array<IComponent> = [];
 
     public addComponent<T extends IComponent>(component: T): T {
         component.gameObject = this;
+
+        if (component.awake)
+            component.awake();
+
         this.components.push(component);
 
         if (component.start)
@@ -20,6 +26,8 @@ export class GameObject {
             this._collider = component;
         if (component instanceof Body)
             this._body = component;
+        if (component instanceof Renderer)
+            this._renderer = component;
 
         return component;
     }
@@ -66,6 +74,10 @@ export class GameObject {
 
     public get body(): Body {
         return this._body;
+    }
+
+    public get renderer(): Renderer {
+        return this._renderer;
     }
 
 }

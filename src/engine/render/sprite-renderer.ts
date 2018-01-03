@@ -1,13 +1,12 @@
-import { IComponent } from "../core/component";
-import { GameObject } from "../core/game-object";
 import { Engine } from "../core/engine";
 import { Sprite } from "../file/sprite";
+import { Renderer } from "./renderer";
 
-export class SpriteRenderer implements IComponent {
-    public gameObject: GameObject;
+export class SpriteRenderer extends Renderer {
     public sprite: Sprite;
 
     constructor(sprite: Sprite) {
+        super();
         this.sprite = sprite;
     }
 
