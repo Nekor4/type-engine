@@ -15,9 +15,9 @@ var config = {
   },
   output: {
     path: path.resolve("./dist"),
-    filename: "[name].bundle.js",
+    filename: "[name].min.js",
     library: "te",
-    sourceMapFilename: "[name].bundle.map",
+    sourceMapFilename: "[name].min.map",
     devtoolModuleFilenameTemplate: function (info) {
         return "file:///" + info.absoluteResourcePath;
     }
