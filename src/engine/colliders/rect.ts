@@ -1,5 +1,7 @@
 import { Vector2 } from "../core/vector2";
 import { ColliderType, Collider } from "./collider";
+import { SpriteRenderer } from "../render/index";
+import { Sprite } from "../../index";
 
 export class RectCollider extends Collider {
     private _dimension: Vector2;
@@ -7,18 +9,27 @@ export class RectCollider extends Collider {
     public halfHeight: number;
     public restitution = 0;
 
-    constructor(dimension = new Vector2) {
+    constructor() {
         super(ColliderType.Rect);
-        this.dimension = dimension;
+
     }
 
-    public onCollision(other: Collider) {
+    public awake(): void {
+        if (this.gameObject.renderer instanceof SpriteRenderer) {
+            const spriteRenderer = <SpriteRenderer>this.gameObject.renderer;
+            this.dimension = new Vector2(
+                spriteRenderer.sprite.img.width,
+                spriteRenderer.sprite.img.height);
+        }
+    }
+
+    public onCollision(other: Collider): void {
         if (other instanceof RectCollider)
             if (this.gameObject.body)
                 this.gameObject.body.resolveRectToRectStaticCollision(other);
     }
 
-    public get dimension() {
+    public get dimension(): Vector2 {
         return this._dimension;
     }
 
@@ -28,11 +39,11 @@ export class RectCollider extends Collider {
         this.halfHeight = value.y * .5;
     }
 
-    public get midX() {
+    public get midX(): number {
         return this.halfWidth + this.gameObject.position.x;
     };
 
-    public get midY() {
+    public get midY(): number {
         return this.halfHeight + this.gameObject.position.y;
     };
 

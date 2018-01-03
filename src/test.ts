@@ -1,8 +1,7 @@
 import * as ts from './index';
-import { Vector2 } from './index';
 
 const engine = new ts.Engine();
-document.body.appendChild(engine.getCanvas());
+document.body.appendChild(engine.canvas);
 
 const stoneSprite = new ts.Sprite('./assets/stone.png');
 const stone1 = new ts.GameObject();
@@ -19,11 +18,11 @@ stone2.addComponent(new ts.SpriteRenderer(stoneSprite));
 stone3.addComponent(new ts.SpriteRenderer(stoneSprite));
 stone4.addComponent(new ts.SpriteRenderer(stoneSprite));
 stone5.addComponent(new ts.SpriteRenderer(stoneSprite));
-stone1.addComponent(new ts.RectCollider(new Vector2(64, 64)));
-stone2.addComponent(new ts.RectCollider(new Vector2(64, 64)));
-stone3.addComponent(new ts.RectCollider(new Vector2(64, 64)));
-stone4.addComponent(new ts.RectCollider(new Vector2(64, 64)));
-stone5.addComponent(new ts.RectCollider(new Vector2(64, 64)));
+stone1.addComponent(new ts.RectCollider());
+stone2.addComponent(new ts.RectCollider());
+stone3.addComponent(new ts.RectCollider());
+stone4.addComponent(new ts.RectCollider());
+stone5.addComponent(new ts.RectCollider());
 
 const body = new ts.Body();
 stone5.addComponent(body);
@@ -53,5 +52,4 @@ document.addEventListener("keyup", event => {
     } else if (event.key === "ArrowLeft") {
         stone5.body.velocity.set(-6, 0);
     }
-
 });
