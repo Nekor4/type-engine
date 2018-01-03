@@ -2,8 +2,9 @@ import { GameObject } from "./game-object";
 import { Collision } from "../colliders";
 
 export class Engine {
-    private canvas: HTMLCanvasElement;
+    private _canvas: HTMLCanvasElement;
     private inGameObjects: Array<GameObject> = [];
+    private isPauzed = true;
     public static ctx: CanvasRenderingContext2D;
 
     constructor(width = 1280, height = 720) {
@@ -12,12 +13,12 @@ export class Engine {
     }
 
     private createCanvas(width: number, height: number): void {
-        this.canvas = document.createElement("canvas");
+        this._canvas = document.createElement("canvas");
         // document.body.appendChild(this.canvas);
-        this.canvas.width = 1280;
-        this.canvas.height = 720;
-        this.canvas.style.border = "1px solid";
-        Engine.ctx = <CanvasRenderingContext2D>this.canvas.getContext("2d");
+        this._canvas.width = 1280;
+        this._canvas.height = 720;
+        this._canvas.style.border = "1px solid";
+        Engine.ctx = <CanvasRenderingContext2D>this._canvas.getContext("2d");
     }
 
     public add(gameObject: GameObject): void {
@@ -26,12 +27,18 @@ export class Engine {
 
     public start(): void {
         console.log("Game starts!");
+        this.isPauzed = false;
         this.startObjects();
         this.gameLoop();
     }
 
-    public getCanvas(): HTMLCanvasElement {
-        return this.canvas;
+    public pauze(): void {
+        console.log("Game paused!");
+        this.isPauzed = true;
+    }
+
+    public get canvas(): HTMLCanvasElement {
+        return this._canvas;
     }
 
     private startObjects(): void {
@@ -41,6 +48,7 @@ export class Engine {
     }
 
     private gameLoop(): void {
+        if (this.isPauzed) return;
         requestAnimationFrame(() => { this.gameLoop() });
         Engine.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
