@@ -18,8 +18,8 @@ export class RectCollider extends Collider {
         if (this.gameObject.renderer instanceof SpriteRenderer) {
             const spriteRenderer = <SpriteRenderer>this.gameObject.renderer;
             this.dimension = new Vector2(
-                spriteRenderer.sprite.img.width,
-                spriteRenderer.sprite.img.height);
+                spriteRenderer.sprite.width,
+                spriteRenderer.sprite.height);
         }
     }
 

@@ -16,7 +16,8 @@ export class SpriteRenderer extends Renderer {
             return;
         }
         Engine.ctx.save();
-        Engine.ctx.drawImage(this.sprite.img, this.gameObject.position.x, this.gameObject.position.y);
+        Engine.ctx.drawImage(this.sprite.img, this.gameObject.position.x, this.gameObject.position.y,
+            this.sprite.width, this.sprite.height);
         Engine.ctx.stroke();
         Engine.ctx.restore();
     }
