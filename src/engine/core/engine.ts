@@ -4,9 +4,12 @@ import { Collision } from "../colliders";
 export class Engine {
     private _canvas: HTMLCanvasElement;
     private inGameObjects: Array<GameObject> = [];
-    private isPauzed = true;
+    private isPauzed = false;
     public static ctx: CanvasRenderingContext2D;
 
+    /** Creates new canvas element on constructor
+     *  @param width Width of canvas.
+     *  @param height Height of canvas. */
     constructor(width = 1280, height = 720) {
         this.createCanvas(width, height);
         console.log("Engine created!");
@@ -21,22 +24,30 @@ export class Engine {
         Engine.ctx = <CanvasRenderingContext2D>this._canvas.getContext("2d");
     }
 
+    /** Adds game object to game objects array. */
     public add(gameObject: GameObject): void {
         this.inGameObjects.push(gameObject);
     }
 
+    /** Starts game loop. */
     public start(): void {
-        console.log("Game starts!");
+        if (!this.isPauzed) {
+            console.log("Game starts!");
+            this.startObjects();
+        } else {
+            console.log("Game resumed!");
+        }
         this.isPauzed = false;
-        this.startObjects();
         this.gameLoop();
     }
 
+    /** Pauses game loop. */
     public pauze(): void {
         console.log("Game paused!");
         this.isPauzed = true;
     }
 
+    /** Returns canvas element. */
     public get canvas(): HTMLCanvasElement {
         return this._canvas;
     }
